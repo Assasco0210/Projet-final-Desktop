@@ -1,0 +1,127 @@
+/* =========================
+   Police générale
+========================= */
+body {
+    font-family: 'Calibri', Arial, Helvetica, sans-serif; /* Calibri en priorité */
+    background: url('/img/eleveifran.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* =========================
+   Conteneur du formulaire
+========================= */
+.log {
+    position: fixed;           
+    top: 50%;                  
+    left: 50%;                 
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 320px;
+    padding: 25px 30px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Calibri', Arial, Helvetica, sans-serif; /* Calibri appliqué */
+}
+
+.log:hover {
+    transform: translate(-50%, -50%) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    
+}
+
+/* =========================
+   Titre du formulaire
+========================= */
+.log h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #222;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Calibri', Arial, Helvetica, sans-serif; /* Calibri appliqué */
+}
+
+/* =========================
+   Icône dans le formulaire
+========================= */
+.log .login-icon {
+    margin-right: 10px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+/* =========================
+   Labels
+========================= */
+.log label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: 'Calibri', Arial, Helvetica, sans-serif; /* Calibri appliqué */
+}
+
+/* =========================
+   Champs input
+========================= */
+.log input {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: 'Calibri', Arial, Helvetica, sans-serif; /* Calibri appliqué */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.log input:focus {
+    outline: none;
+    border-color: #2a5298;
+    box-shadow: 0 0 5px rgba(42,82,152,0.5);
+}
+
+/* =========================
+   Bouton
+========================= */
+.log button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2a5298;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Calibri', Arial, Helvetica, sans-serif; /* Calibri appliqué */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.log button:hover {
+  background: linear-gradient(135deg, #1e3c72, #2a5298, #4a90e2);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 480px) {
+    .log {
+        padding: 20px;
+        margin: 60px auto;
+    }
+
+    .log h1 {
+        font-size: 20px;
+    }
+
+    .log input, .log button {
+        font-size: 14px;
+    }
+}

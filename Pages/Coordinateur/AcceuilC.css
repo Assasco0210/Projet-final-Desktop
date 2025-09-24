@@ -19,15 +19,15 @@
     min-height: 100vh;
   }
   
-  .header {
-    background-color: blue;
-    color: white;
-    width: 100%;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.header {
+  background-color: #003366;
+  color: white;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
   
   .title {
     font-size: 1.5em;
@@ -78,24 +78,35 @@
     padding: 20px;
   }
   
-  .tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .tab {
-    padding: 10px 20px;
-    background-color: #ddd;
-    border: none;
-    cursor: pointer;
-    font-size: 1em;
-  }
-  
-  .tab.active {
-    background-color: #e74c3c;
-    color: white;
-  }
+.tabs {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tabs a {
+  text-decoration: none;
+}
+
+.tab {
+  padding: 10px 15px;
+  background-color: #ddd;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.tab:hover {
+  background-color: #ccc;
+}
+
+.tab.active {
+  background-color: #e74c3c;
+  color: white;
+}
   
   .timetable {
     background-color: white;
@@ -132,7 +143,93 @@
     margin-top: 20px;
   }
   
-  .modify-button:hover {
-    background-color: #e74c3c;
+.modify-button:hover {
+  background-color: #e74c3c;
+}
+
+/* Nouveaux styles pour les éléments ajoutés */
+.logout-form {
+  display: inline;
+}
+
+.logout-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+.no-schedule, .no-class-selected {
+  text-align: center;
+  padding: 40px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.no-schedule p, .no-class-selected p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.timetable h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.timetable a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.timetable a:hover {
+  color: #0056b3;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
   }
+  
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .tabs {
+    justify-content: center;
+  }
+  
+  .tab {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+  
+  table {
+    font-size: 14px;
+  }
+  
+  th, td {
+    padding: 10px 5px;
+  }
+}
   

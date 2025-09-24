@@ -1,82 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="AcceuilE.css">
-    <title>Document</title>
-</head>
-<style>
-    .bg-dark-blue {
-      background-color: #003366;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pronote Ifran</title>
+  <link rel="stylesheet" href="AcceuilE.css">
+  <style>
+    /* Bouton de déconnexion */
+    .logout-button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-button:hover {
+      background-color: #c82333;
+    }
+
+    /* Conteneur nom + bouton */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .student-name {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    /* Style "Aucun cours" */
+    .empty-course {
+      color: gray;
+      font-style: italic;
     }
   </style>
 </head>
+
 <body>
-  <nav class="navbar bg-dark-blue">
-    <div class="container-fluid">
-      <a class="navbar-brand text-white">Pronote IFRAN</a>
-      <a class="navbar-brand text-white">Etudiant</a>
-    </div>
-  </nav>
-          
-  <div class="layout" style="position: relative;left: 150px;">
-    <aside class="sidebar">
-      <ul>
-        <li class="menu-item active">
+  <div class="app">
+    <header class="header">
+      <div class="title">Pronote Ifran- Espace Etudiant </div>
+      <div class="header-right">
+        <div class="student-name" id="student-name">Chargement...</div>
+        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+        
+          <button type="submit" class="logout-button">Déconnexion</button>
+        </form>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <ul>
+          <li class="menu-item active">
             <span class="icon">&#128197;</span> Emploi du temps
-            <a href="Pages/Etudiant/AcceuilE.html">Emploi du temps</a> 
-        </li>
-      </ul>
-    </aside>
+          </li>
+        </ul>
+      </aside>
 
-    <main class="main-content">
-      <div class="tabs">
-        <button class="tab active">B2 DEV</button>
-      </div>
-
-      <div class="timetable">
-        <h2>Emploi du temps B3 Développement Web du 01 au 05 Juillet 2024</h2>
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Lundi 01/07</th>
-              <th>Mardi 02/07</th>
-              <th>Mercredi 03/07</th>
-              <th>Jeudi 04/07</th>
-              <th>Vendredi 05/07</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>MATIN 9H00 - 12H00</td>
-              <td>WORKSHOP Projet Bloc 3<br> Salle 4<br> <strong>Présence obligatoire</strong></td>
-              <td>WORKSHOP Projet Bloc 3<br> Salle 4<br> <strong>Présence obligatoire</strong></td>
-              <td>WORKSHOP Projet Bloc 3<br> Salle 4<br> <strong>Présence obligatoire</strong></td>
-              <td>WORKSHOP Projet Bloc 3<br> Salle 4<br> <strong>Présence obligatoire</strong></td>
-              <td>WORKSHOP Projet Bloc 3<br> Salle 4<br> <strong>Présence obligatoire</strong></td>
-            </tr>
-            <tr>
-              <td>APRES-MIDI 14H00 - 17H00</td>
-              <td>WORKSHOP Projet Bloc 3<br> Salle 4<br> <strong>Présence obligatoire</strong></td>
-              <td>WORKSHOP Projet Bloc 3<br> Salle 4<br> <strong>Présence obligatoire</strong></td>
-              <td>WORKSHOP Projet Bloc 3<br> Salle 4<br> <strong>Présence obligatoire</strong></td>
-              <td>WORKSHOP Projet Bloc 3<br> Salle 4<br> <strong>Présence obligatoire</strong></td>
-              <td>WORKSHOP Projet Bloc 3<br> Salle 4<br> <strong>Présence obligatoire</strong></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <p class="note">NB: LA PRESENTATION FINALE DU BLOC 3 SE TIENDRA LE MARDI 9 JUILLET 2024 A 09H00.</p>
-      </div>
-    </main>
+      <main class="main-content">
+        <div class="timetable">
+          <table id="timetable">
+            <thead>
+              <tr>
+                <th>Jour</th>
+                <!-- Colonnes dynamiques -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="row-matin">
+                <td>MATIN 9H00 - 12H00</td>
+              </tr>
+              <tr id="row-soir">
+                <td>APRES-MIDI 14H00 - 17H00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
 </body>
 
 </html>

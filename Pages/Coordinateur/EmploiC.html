@@ -1,48 +1,512 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pronote Ifran - Modifier</title>
-  <link rel="stylesheet" href="emploimodif.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Créer l'Emploi du Temps</title>
+<link rel="stylesheet" href="AcceuilC.css">
+<style>
+    .timetable-container {
+        overflow-x: auto;
+        margin-top: 20px;
+    }
+    table.timetable {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    table.timetable th,
+    table.timetable td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+    table.timetable th {
+        background-color: #007bff;
+        color: white;
+    }
+    select, input[type="date"] {
+        width: 90%;
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+    
+    .form-section {
+        margin-bottom: 20px;
+    }
+    
+    .form-section label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    
+    .form-section select {
+        width: 150px;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+    
+    button[type="submit"] {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: background-color 0.3s ease;
+    }
+    
+    button[type="submit"]:hover {
+        background-color: #218838;
+    }
+    
+    h1 {
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    
+    .success-message {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 15px;
+        border: 1px solid #c3e6cb;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        display: none;
+    }
+    
+    .error-message {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border: 1px solid #f5c6cb;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        display: none;
+    }
+</style>
 </head>
-
 <body>
-  <div class="app">
+<div class="app">
     <header class="header">
-      <div class="title">Pronote Ifran</div>
-      <div class="role">
-       
-        Coordinateur
-      </div>
+        <div class="title">Pronote Ifran</div>
+        <div class="role">Coordinateur</div>
+        <form method="POST" class="logout-form">
+            <button type="button" class="logout-button" onclick="logout()">Déconnexion</button>
+        </form>
     </header>
 
     <div class="layout">
-      <aside class="sidebar">
-        <ul>
-          <li class="menu-item active">
-            <span class="icon">&#128197;</span> Emploi du temps
-          </li>
-          <li class="menu-item">
-            <span class="icon">&#128202;</span> Graphiques
-          </li>
-          <li class="menu-item">
-            <span class="icon">&#128100;</span> Absences
-          </li>
-        </ul>
-      </aside>
+        <aside class="sidebar">
+            <ul>
+                <li class="menu-item">
+                    <a href="AcceuilC.html">
+                        <span class="icon">&#128197;</span> Emploi du temps
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#graphiques">
+                        <span class="icon">&#128202;</span> Graphiques
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <span class="icon">&#128100;</span> Créer emploi du temps
+                </li>
+            </ul>
+        </aside>
 
-      <main class="main-content">
-        <div class="form-section">
-          <button class="input-btn">Jour à modifier</button>
-          <button class="input-btn">Heure</button>
-          <button class="input-btn">Programmme</button>
-        </div>
-        <button class="modify-button">Modifier</button>
-      </main>
+        <main class="main-content">
+            <h1>Créer l'Emploi du Temps</h1>
+            
+            <div class="success-message" id="success-message">
+                Emploi du temps créé avec succès !
+            </div>
+            
+            <div class="error-message" id="error-message">
+                Erreur lors de la création de l'emploi du temps.
+            </div>
+            
+            <form id="schedule-form">
+                <div class="form-section">
+                    <label for="class">Classe :</label>
+                    <select id="class" name="class_id" required>
+                        <option value="">Sélectionner une classe</option>
+                        <option value="1">PREPA - CREA</option>
+                        <option value="2">PREPA - COMM</option>
+                        <option value="3">PREPA - DEV</option>
+                        <option value="4">B2 - CREA</option>
+                        <option value="5">B2 - COMM</option>
+                        <option value="6">B2 - DEV</option>
+                        <option value="7">B3 - CREA</option>
+                        <option value="8">B3 - COMM</option>
+                        <option value="9">B3 - DEV</option>
+                    </select>
+                </div>
+
+                <div class="timetable-container">
+                    <table class="timetable">
+                        <thead>
+                            <tr>
+                                <th>Jour</th>
+                                <th>Date</th>
+                                <th>Module Matin</th>
+                                <th>Enseignant Matin</th>
+                                <th>Module Soir</th>
+                                <th>Enseignant Soir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lundi</td>
+                                <td><input type="date" name="schedule[lundi][day]" required></td>
+                                <td>
+                                    <select name="schedule[lundi][morning_module_id]">
+                                        <option value="">Aucun module</option>
+                                        <option value="1">Mathématiques</option>
+                                        <option value="2">Français</option>
+                                        <option value="3">Histoire</option>
+                                        <option value="4">Sciences</option>
+                                        <option value="5">Anglais</option>
+                                        <option value="6">Arts</option>
+                                        <option value="7">Sport</option>
+                                        <option value="8">Workshop</option>
+                                        <option value="9">E-learning</option>
+                                        <option value="10">WORKSHOP Projet Bloc 3</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[lundi][morning_teacher_id]">
+                                        <option value="">Aucun enseignant</option>
+                                        <option value="1">Prof. Martin</option>
+                                        <option value="2">Prof. Dubois</option>
+                                        <option value="3">Prof. Leroy</option>
+                                        <option value="4">Prof. Bernard</option>
+                                        <option value="5">Prof. Moreau</option>
+                                        <option value="6">Prof. Smith</option>
+                                        <option value="7">Prof. Durand</option>
+                                        <option value="8">Prof. Rousseau</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[lundi][evening_module_id]">
+                                        <option value="">Aucun module</option>
+                                        <option value="1">Mathématiques</option>
+                                        <option value="2">Français</option>
+                                        <option value="3">Histoire</option>
+                                        <option value="4">Sciences</option>
+                                        <option value="5">Anglais</option>
+                                        <option value="6">Arts</option>
+                                        <option value="7">Sport</option>
+                                        <option value="8">Workshop</option>
+                                        <option value="9">E-learning</option>
+                                        <option value="10">WORKSHOP Projet Bloc 3</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[lundi][evening_teacher_id]">
+                                        <option value="">Aucun enseignant</option>
+                                        <option value="1">Prof. Martin</option>
+                                        <option value="2">Prof. Dubois</option>
+                                        <option value="3">Prof. Leroy</option>
+                                        <option value="4">Prof. Bernard</option>
+                                        <option value="5">Prof. Moreau</option>
+                                        <option value="6">Prof. Smith</option>
+                                        <option value="7">Prof. Durand</option>
+                                        <option value="8">Prof. Rousseau</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mardi</td>
+                                <td><input type="date" name="schedule[mardi][day]" required></td>
+                                <td>
+                                    <select name="schedule[mardi][morning_module_id]">
+                                        <option value="">Aucun module</option>
+                                        <option value="1">Mathématiques</option>
+                                        <option value="2">Français</option>
+                                        <option value="3">Histoire</option>
+                                        <option value="4">Sciences</option>
+                                        <option value="5">Anglais</option>
+                                        <option value="6">Arts</option>
+                                        <option value="7">Sport</option>
+                                        <option value="8">Workshop</option>
+                                        <option value="9">E-learning</option>
+                                        <option value="10">WORKSHOP Projet Bloc 3</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[mardi][morning_teacher_id]">
+                                        <option value="">Aucun enseignant</option>
+                                        <option value="1">Prof. Martin</option>
+                                        <option value="2">Prof. Dubois</option>
+                                        <option value="3">Prof. Leroy</option>
+                                        <option value="4">Prof. Bernard</option>
+                                        <option value="5">Prof. Moreau</option>
+                                        <option value="6">Prof. Smith</option>
+                                        <option value="7">Prof. Durand</option>
+                                        <option value="8">Prof. Rousseau</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[mardi][evening_module_id]">
+                                        <option value="">Aucun module</option>
+                                        <option value="1">Mathématiques</option>
+                                        <option value="2">Français</option>
+                                        <option value="3">Histoire</option>
+                                        <option value="4">Sciences</option>
+                                        <option value="5">Anglais</option>
+                                        <option value="6">Arts</option>
+                                        <option value="7">Sport</option>
+                                        <option value="8">Workshop</option>
+                                        <option value="9">E-learning</option>
+                                        <option value="10">WORKSHOP Projet Bloc 3</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[mardi][evening_teacher_id]">
+                                        <option value="">Aucun enseignant</option>
+                                        <option value="1">Prof. Martin</option>
+                                        <option value="2">Prof. Dubois</option>
+                                        <option value="3">Prof. Leroy</option>
+                                        <option value="4">Prof. Bernard</option>
+                                        <option value="5">Prof. Moreau</option>
+                                        <option value="6">Prof. Smith</option>
+                                        <option value="7">Prof. Durand</option>
+                                        <option value="8">Prof. Rousseau</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mercredi</td>
+                                <td><input type="date" name="schedule[mercredi][day]" required></td>
+                                <td>
+                                    <select name="schedule[mercredi][morning_module_id]">
+                                        <option value="">Aucun module</option>
+                                        <option value="1">Mathématiques</option>
+                                        <option value="2">Français</option>
+                                        <option value="3">Histoire</option>
+                                        <option value="4">Sciences</option>
+                                        <option value="5">Anglais</option>
+                                        <option value="6">Arts</option>
+                                        <option value="7">Sport</option>
+                                        <option value="8">Workshop</option>
+                                        <option value="9">E-learning</option>
+                                        <option value="10">WORKSHOP Projet Bloc 3</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[mercredi][morning_teacher_id]">
+                                        <option value="">Aucun enseignant</option>
+                                        <option value="1">Prof. Martin</option>
+                                        <option value="2">Prof. Dubois</option>
+                                        <option value="3">Prof. Leroy</option>
+                                        <option value="4">Prof. Bernard</option>
+                                        <option value="5">Prof. Moreau</option>
+                                        <option value="6">Prof. Smith</option>
+                                        <option value="7">Prof. Durand</option>
+                                        <option value="8">Prof. Rousseau</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[mercredi][evening_module_id]">
+                                        <option value="">Aucun module</option>
+                                        <option value="1">Mathématiques</option>
+                                        <option value="2">Français</option>
+                                        <option value="3">Histoire</option>
+                                        <option value="4">Sciences</option>
+                                        <option value="5">Anglais</option>
+                                        <option value="6">Arts</option>
+                                        <option value="7">Sport</option>
+                                        <option value="8">Workshop</option>
+                                        <option value="9">E-learning</option>
+                                        <option value="10">WORKSHOP Projet Bloc 3</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[mercredi][evening_teacher_id]">
+                                        <option value="">Aucun enseignant</option>
+                                        <option value="1">Prof. Martin</option>
+                                        <option value="2">Prof. Dubois</option>
+                                        <option value="3">Prof. Leroy</option>
+                                        <option value="4">Prof. Bernard</option>
+                                        <option value="5">Prof. Moreau</option>
+                                        <option value="6">Prof. Smith</option>
+                                        <option value="7">Prof. Durand</option>
+                                        <option value="8">Prof. Rousseau</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Jeudi</td>
+                                <td><input type="date" name="schedule[jeudi][day]" required></td>
+                                <td>
+                                    <select name="schedule[jeudi][morning_module_id]">
+                                        <option value="">Aucun module</option>
+                                        <option value="1">Mathématiques</option>
+                                        <option value="2">Français</option>
+                                        <option value="3">Histoire</option>
+                                        <option value="4">Sciences</option>
+                                        <option value="5">Anglais</option>
+                                        <option value="6">Arts</option>
+                                        <option value="7">Sport</option>
+                                        <option value="8">Workshop</option>
+                                        <option value="9">E-learning</option>
+                                        <option value="10">WORKSHOP Projet Bloc 3</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[jeudi][morning_teacher_id]">
+                                        <option value="">Aucun enseignant</option>
+                                        <option value="1">Prof. Martin</option>
+                                        <option value="2">Prof. Dubois</option>
+                                        <option value="3">Prof. Leroy</option>
+                                        <option value="4">Prof. Bernard</option>
+                                        <option value="5">Prof. Moreau</option>
+                                        <option value="6">Prof. Smith</option>
+                                        <option value="7">Prof. Durand</option>
+                                        <option value="8">Prof. Rousseau</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[jeudi][evening_module_id]">
+                                        <option value="">Aucun module</option>
+                                        <option value="1">Mathématiques</option>
+                                        <option value="2">Français</option>
+                                        <option value="3">Histoire</option>
+                                        <option value="4">Sciences</option>
+                                        <option value="5">Anglais</option>
+                                        <option value="6">Arts</option>
+                                        <option value="7">Sport</option>
+                                        <option value="8">Workshop</option>
+                                        <option value="9">E-learning</option>
+                                        <option value="10">WORKSHOP Projet Bloc 3</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[jeudi][evening_teacher_id]">
+                                        <option value="">Aucun enseignant</option>
+                                        <option value="1">Prof. Martin</option>
+                                        <option value="2">Prof. Dubois</option>
+                                        <option value="3">Prof. Leroy</option>
+                                        <option value="4">Prof. Bernard</option>
+                                        <option value="5">Prof. Moreau</option>
+                                        <option value="6">Prof. Smith</option>
+                                        <option value="7">Prof. Durand</option>
+                                        <option value="8">Prof. Rousseau</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Vendredi</td>
+                                <td><input type="date" name="schedule[vendredi][day]" required></td>
+                                <td>
+                                    <select name="schedule[vendredi][morning_module_id]">
+                                        <option value="">Aucun module</option>
+                                        <option value="1">Mathématiques</option>
+                                        <option value="2">Français</option>
+                                        <option value="3">Histoire</option>
+                                        <option value="4">Sciences</option>
+                                        <option value="5">Anglais</option>
+                                        <option value="6">Arts</option>
+                                        <option value="7">Sport</option>
+                                        <option value="8">Workshop</option>
+                                        <option value="9">E-learning</option>
+                                        <option value="10">WORKSHOP Projet Bloc 3</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[vendredi][morning_teacher_id]">
+                                        <option value="">Aucun enseignant</option>
+                                        <option value="1">Prof. Martin</option>
+                                        <option value="2">Prof. Dubois</option>
+                                        <option value="3">Prof. Leroy</option>
+                                        <option value="4">Prof. Bernard</option>
+                                        <option value="5">Prof. Moreau</option>
+                                        <option value="6">Prof. Smith</option>
+                                        <option value="7">Prof. Durand</option>
+                                        <option value="8">Prof. Rousseau</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[vendredi][evening_module_id]">
+                                        <option value="">Aucun module</option>
+                                        <option value="1">Mathématiques</option>
+                                        <option value="2">Français</option>
+                                        <option value="3">Histoire</option>
+                                        <option value="4">Sciences</option>
+                                        <option value="5">Anglais</option>
+                                        <option value="6">Arts</option>
+                                        <option value="7">Sport</option>
+                                        <option value="8">Workshop</option>
+                                        <option value="9">E-learning</option>
+                                        <option value="10">WORKSHOP Projet Bloc 3</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="schedule[vendredi][evening_teacher_id]">
+                                        <option value="">Aucun enseignant</option>
+                                        <option value="1">Prof. Martin</option>
+                                        <option value="2">Prof. Dubois</option>
+                                        <option value="3">Prof. Leroy</option>
+                                        <option value="4">Prof. Bernard</option>
+                                        <option value="5">Prof. Moreau</option>
+                                        <option value="6">Prof. Smith</option>
+                                        <option value="7">Prof. Durand</option>
+                                        <option value="8">Prof. Rousseau</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button type="submit">Enregistrer l'Emploi du Temps</button>
+            </form>
+        </main>
     </div>
-  </div>
-</body>
+</div>
 
+<script>
+    function logout() {
+        if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+            window.location.href = 'LoginC.html';
+        }
+    }
+
+    document.getElementById('schedule-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const classId = formData.get('class_id');
+        
+        if (!classId) {
+            document.getElementById('error-message').textContent = 'Veuillez sélectionner une classe.';
+            document.getElementById('error-message').style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+            return;
+        }
+        
+        // Simuler l'enregistrement
+        setTimeout(() => {
+            document.getElementById('success-message').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+            
+            // Optionnel: rediriger vers la page d'accueil après 2 secondes
+            setTimeout(() => {
+                if (confirm('Emploi du temps créé avec succès ! Voulez-vous retourner à la page d\'accueil ?')) {
+                    window.location.href = 'AcceuilC.html';
+                }
+            }, 2000);
+        }, 1000);
+    });
+</script>
+</body>
 </html>

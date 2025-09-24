@@ -1,0 +1,144 @@
+/* =========================
+   Réinitialisation de base
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Calibri', Arial, Helvetica, sans-serif; /* Calibri en priorité */
+    background: url('/img/eleveifran.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* =========================
+   Header
+========================= */
+header {
+    background: linear-gradient(90deg, #1e3c72, #2a5298);
+    width: 100%;
+    height: 60px; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* =========================
+   Bloc connexion / menu
+========================= */
+.log {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    max-width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.log:hover {
+    transform: translateY(-50%) scale(1.03);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+}
+
+/* =========================
+   Liste et items
+========================= */
+.log ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-item {
+    border-bottom: 1px solid #ddd;
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+/* =========================
+   Liens prenant toute la ligne
+========================= */
+.list-item a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    width: 100%;
+    text-decoration: none;
+    color: #222;
+    border-radius: 6px;
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.list-item a:hover {
+     background: linear-gradient(135deg, #1e3c72, #2a5298, #4a90e2);
+    color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+/* =========================
+   Icônes
+========================= */
+.list-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain; /* pour garder l'image entière visible */
+    transition: transform 0.3s ease;
+}
+
+.list-item a:hover img {
+    transform: scale(1.1); /* léger zoom au hover */
+}
+
+/* Icône étudiant spécifique */
+.list-item img.icon-student {
+    width: 40px;
+    height: 40px;
+}
+
+/* =========================
+   Texte
+========================= */
+.list-item h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 768px) {
+    .log {
+        position: static;
+        transform: none;
+        margin: 80px auto 20px;
+        width: 90%;
+    }
+
+    header {
+        font-size: 18px;
+    }
+}
