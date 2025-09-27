@@ -1,4 +1,4 @@
-const API_URL = "https://upbeat-vagarious-casen.ngrok-free.dev/api/student-login";
+const API_URL = "https://upbeat-vagarious-casen.ngrok-free.dev/api/parent-login";
 
 // Vérification immédiate d'Axios global au chargement du script (pour débogage)
 if (typeof axios === 'undefined') {
@@ -9,7 +9,7 @@ if (typeof axios === 'undefined') {
 }
 
 // Fonction de login pour les parents (appelée depuis le formulaire HTML)
-async function loginStudent() {
+async function loginParent() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
@@ -38,9 +38,9 @@ async function loginStudent() {
     console.log("Réponse API reçue:", response.data); // Log de la réponse
 
     if (response.data.success) {
-      alert("Connexion réussie ✅ Bienvenue " + response.data.student.nom); // Adapté pour 'student.nom' (ajustez si différent)
+      alert("Connexion réussie ✅ Bienvenue " + response.data.parent.nom); // Adapté pour 'parent.nom' (ajustez si différent)
       // Redirection vers la page d'accueil parent
-      window.location.href = "AcceuilE.html";
+      window.location.href = "AcceuilPa.html";
     } else {
       alert("❌ Identifiants incorrects");
     }

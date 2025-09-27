@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr"> <!-- Changé en 'fr' pour le contenu français -->
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>Connexion Parent</title> 
     <style>
         body {
             background-image: url('src/451842081_974803871324283_2219042639794406636_n.jpg');
@@ -27,8 +27,9 @@
             max-width: 400px;
             width: 100%;
             position: relative;
-            left: 1000px;
+            left: 1000px; 
             top: 100px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
         .login-container img {
@@ -41,11 +42,13 @@
             background-color: #0000ff;
             border-color: #0000ff;
         }
+
+       
+        */
     </style>
 </head>
 
 <body>
-
     <nav class="navbar sticky-top" style="background-color: #003366;">
         <div class="container-fluid">
             <a class="navbar-brand mx-auto text-center text-white" href="#">Pronote IFRAN</a>
@@ -53,18 +56,23 @@
     </nav>
 
     <div class="login-container mt-5">
-        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User Icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User  Icon"> <!-- Alt conservé -->
         <h2 class="mb-4">Espace Parents</h2>
-        <form>
+        <form onsubmit="event.preventDefault(); loginParent();"> <!-- Ajout onsubmit pour appeler JS (sans params) -->
             <div class="mb-3 text-start">
                 <label for="email" class="form-label">E-mail :</label>
-                <input type="email" class="form-control" id="email" placeholder="Entrez votre e-mail">
+                <input type="email" class="form-control" id="email" placeholder="Entrez votre e-mail" required> <!-- Ajout required -->
             </div>
             <div class="mb-4 text-start">
                 <label for="password" class="form-label">Mot de passe :</label>
-                <input type="password" class="form-control" id="password" placeholder="Entrez votre mot de passe">
+                <input type="password" class="form-control" id="password" placeholder="Entrez votre mot de passe" required> <!-- Ajout required -->
             </div>
-            <a href="AcceuilPa.html" class="btn btn-primary w-100">Se connecter</a>
-
+            <button type="submit" class="btn btn-primary w-100">Se connecter</button> <!-- Changé en button submit (redirection en JS) -->
         </form>
+    </div>
+
+    <!-- Scripts : Bootstrap déjà en head ; Axios et JS à la fin du body -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.2/dist/axios.min.js"></script> <!-- Ajout crucial : Axios global avant LoginPa.js -->
+    <script src="LoginPa.js"></script> <!-- Votre JS pour parents (déplacé hors form) -->
 </body>
+</html>
