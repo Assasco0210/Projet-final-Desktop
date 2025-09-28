@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pronote Ifran</title>
+  <link rel="stylesheet" href="PresencesP.css">
+  <style>
+    .form-group {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .form-group div {
+      margin-bottom: 15px;
+    }
+    .form-group input[type="radio"] {
+      margin-right: 10px;
+    }
+    .form-group .radio-label {
+      display: inline-block;
+      margin-right: 15px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .alert {
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="title">Pronote Ifran- Espace Enseignant </div>
+      <div class="header-right">
+        <div class="teacher-name" id="teacher-name">Chargement...</div>
+        <form action="" method="POST" style="display: inline;">
+        
+          <button type="submit" class="logout-button" onclick="logout()";>Déconnexion</button>
+        </form>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <ul>
+          <li class="menu-item ">
+            <a href="AcceuilP.html">Créer emploi du temps</a>
+          </li>
+          <li class="menu-item active">
+            <a href="PresencesP.html">Présences</a>
+          </li>
+          </li>
+        </ul>
+      </aside>
+
+      <main class="main-content">
+
+        <!-- Formulaire pour marquer les présences -->
+        <form id="presenceForm">
+          <input type="hidden" name="" value="">
+            <div class="form-group">
+              <label for="eleve">eleve</label>
+              <div>
+                <label class="radio-label">
+                  <input type="radio" name="presences[" value="présent" required> Présent
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="presences" value="absent" required> Absent
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="presences" value="retard" required> Retard
+                </label>
+              </div>
+            </div>
+          
+
+          <button type="submit">Enregistrer</button>
+        </form>
+
+        <!-- Zone pour afficher le message de retour -->
+        <div id="response-message"></div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

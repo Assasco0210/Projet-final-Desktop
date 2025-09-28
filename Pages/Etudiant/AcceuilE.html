@@ -41,19 +41,44 @@
       color: gray;
       font-style: italic;
     }
+
+    /* Indicateur de chargement (optionnel) */
+    #loading-indicator {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-style: italic;
+    }
+
+    /* Amélioration table : Scroll horizontal si beaucoup de colonnes */
+    .timetable {
+      overflow-x: auto;
+    }
+
+    #timetable th, #timetable td {
+      padding: 8px;
+      border: 1px solid #ddd;
+      text-align: left;
+      min-width: 150px; /* Pour les cellules avec du texte long */
+    }
+
+    #timetable th:first-child, #timetable td:first-child {
+      position: sticky;
+      left: 0;
+      background-color: #f8f9fa;
+      font-weight: bold;
+    }
   </style>
 </head>
 
 <body>
   <div class="app">
     <header class="header">
-      <div class="title">Pronote Ifran- Espace Etudiant </div>
+      <div class="title">Pronote Ifran - Espace Étudiant</div>
       <div class="header-right">
         <div class="student-name" id="student-name">Chargement...</div>
-        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-        
-          <button type="submit" class="logout-button">Déconnexion</button>
-        </form>
+        <!-- Bouton déconnexion -->
+        <button type="button" class="logout-button" onclick="logout()">Déconnexion</button>
       </div>
     </header>
 
@@ -67,20 +92,25 @@
       </aside>
 
       <main class="main-content">
+        <!-- Indicateur de chargement (optionnel, masqué après chargement) -->
+        <div id="loading-indicator">Chargement de l'emploi du temps...</div>
+        
         <div class="timetable">
           <table id="timetable">
             <thead>
               <tr>
                 <th>Jour</th>
-                <!-- Colonnes dynamiques -->
+                <!-- Colonnes dynamiques pour les dates/jours -->
               </tr>
             </thead>
             <tbody>
               <tr id="row-matin">
                 <td>MATIN 9H00 - 12H00</td>
+                <!-- Cellules dynamiques pour matin -->
               </tr>
               <tr id="row-soir">
                 <td>APRES-MIDI 14H00 - 17H00</td>
+                <!-- Cellules dynamiques pour soir -->
               </tr>
             </tbody>
           </table>
@@ -88,6 +118,11 @@
       </main>
     </div>
   </div>
-</body>
 
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.2/dist/axios.min.js"></script>
+  
+  <!-- Script emploi du temps (le nouveau code ci-dessous) -->
+  <script src="EmploiE.js"></script>
+</body>
 </html>

@@ -1,4 +1,5 @@
-const API_URL = "https://upbeat-vagarious-casen.ngrok-free.dev/api/parent-login";
+// URL de l'API exposée via Ngrok pour les enseignants
+const API_URL = "https://upbeat-vagarious-casen.ngrok-free.dev/api/teacher-login";
 
 // Vérification immédiate d'Axios global au chargement du script (pour débogage)
 if (typeof axios === 'undefined') {
@@ -8,8 +9,8 @@ if (typeof axios === 'undefined') {
   console.log("✅ Axios global chargé avec succès (version:", axios.VERSION || "inconnue", ")");
 }
 
-// Fonction de login pour les parents (appelée depuis le formulaire HTML)
-async function loginParent() {
+// Fonction de login pour les enseignants (appelée depuis le formulaire HTML)
+async function loginTeacher() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
@@ -21,13 +22,13 @@ async function loginParent() {
 
   // Vérification Axios avant l'appel (redondante mais sûre)
   if (typeof axios === 'undefined') {
-    console.error("❌ Axios non disponible dans loginParent.");
+    console.error("❌ Axios non disponible dans loginTeacher.");
     alert("Erreur : Axios non chargé. Vérifiez la console.");
     return;
   }
 
   try {
-    console.log("Tentative de connexion parent pour l'email:", email); // Log de débogage
+    console.log("Tentative de connexion enseignant pour l'email:", email); // Log de débogage adapté
     console.log("URL API utilisée:", API_URL); // Confirme le serveur distant
 
     const response = await axios.post(API_URL, {
@@ -38,9 +39,12 @@ async function loginParent() {
     console.log("Réponse API reçue:", response.data); // Log de la réponse
 
     if (response.data.success) {
-      alert("Connexion réussie ✅ Bienvenue " + response.data.parent.nom); // Adapté pour 'parent.nom' (ajustez si différent)
-      // Redirection vers la page d'accueil parent
-      window.location.href = "AcceuilPa.html";
+      // Fallback si nom undefined (pour éviter crash)
+      const nom = response.data.teacher.nom || "Enseignant";
+      alert("Connexion réussie ✅ Bienvenue " + nom); // Adapté pour 'teacher.nom'
+      
+      // Redirection vers la page d'accueil enseignant
+      window.location.href = "AcceuilP.html"; // Comme dans votre HTML (ajustez si besoin en "AcceuilT.html")
     } else {
       alert("❌ Identifiants incorrects");
     }
@@ -58,13 +62,14 @@ async function loginParent() {
     }
   }
 }
+
 function logout() {
   console.log("🔄 Tentative de déconnexion...");
-  
+
   if (confirm("Voulez-vous vraiment vous déconnecter ?")) {
     localStorage.clear(); // Efface tout, y compris studentId et studentName
     console.log("✅ Session effacée (localStorage cleared).");
-    window.location.href = "LoginPa.html";
+    window.location.href = "index.html";
   } else {
     console.log("❌ Déconnexion annulée par l'utilisateur.");
   }
