@@ -123,7 +123,7 @@ function logout() {
   if (confirm("Voulez-vous vraiment vous déconnecter ?")) {
     localStorage.clear(); // Efface tout, y compris studentId et studentName
     console.log("✅ Session effacée (localStorage cleared).");
-    window.location.href = "index.html";
+    window.location.href = "LoginE.html";
   } else {
     console.log("❌ Déconnexion annulée par l'utilisateur.");
   }

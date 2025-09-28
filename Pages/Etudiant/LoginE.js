@@ -73,17 +73,4 @@
        }
      }
    }
-
-   // Fonction logout (si pas déjà présente ; sinon, gardez-la dans EmploiE.js)
-   function logout() {
-     console.log("🔄 Tentative de déconnexion...");
-
-     if (confirm("Voulez-vous vraiment vous déconnecter ?")) {
-       localStorage.clear(); // Efface tout, y compris studentId et studentName
-       console.log("✅ Session effacée (localStorage cleared).");
-       window.location.href = "index.html";
-     } else {
-       console.log("❌ Déconnexion annulée par l'utilisateur.");
-     }
-   }
    
